@@ -36,7 +36,7 @@
                     "Clientes"
                 ],
                 "summary": "Lista os clientes",
-                "operationId": "65ff200b3cd0cebf89ab35bd2a55326a",
+                "operationId": "d9b1d82c68c962c4bd1ca4d01de2f162",
                 "responses": {
                     "200": {
                         "description": "Lista de clientes"
@@ -48,7 +48,7 @@
                     "Clientes"
                 ],
                 "summary": "Cadastro de clientes",
-                "operationId": "650c2927959073663a6078b724eaefbc",
+                "operationId": "0764ff60ffec8a6bb9ce14cf02bb1319",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -80,7 +80,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Cliente cadastrado com sucesso"
                     }
                 }
@@ -92,7 +92,7 @@
                     "Clientes"
                 ],
                 "summary": "Exibe um cliente",
-                "operationId": "b54f5bbb2020ce21b50aa66943c3f384",
+                "operationId": "275f0a349af0b01b0838cf5145ec2234",
                 "parameters": [
                     {
                         "name": "id",
