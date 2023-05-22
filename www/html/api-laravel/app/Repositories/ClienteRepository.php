@@ -3,17 +3,25 @@
 namespace App\Repositories;
 
 use App\Models\Cliente;
+use App\Repositories\Cliente\ClienteRepositoryInterface;
 
-class ClienteRepository
+class ClienteRepository implements ClienteRepositoryInterface
 {
+    private $clienteModel;
+
+    public function __construct(Cliente $cliente)
+    {
+        $this->clienteModel = $cliente;
+    }
+
     public function create(array $data)
     {
-        return Cliente::create($data);
+        return $this->clienteModel->create($data);
     }
 
     public function getById(int $id)
     {
-        return Cliente::findOrFail($id);
+        return $this->clienteModel->find($id);
     }
 
     public function update(int $id, array $data)
@@ -25,6 +33,6 @@ class ClienteRepository
 
     public function getAll()
     {
-        return Cliente::all();
+        return $this->clienteModel->all();
     }
 }

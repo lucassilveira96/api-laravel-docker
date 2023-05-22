@@ -2,33 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ClienteRepository;
+use App\Services\ClienteService;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
 class ClienteController extends Controller
 {
-    private $clienteRepository;
+    private $clienteService;
 
-    public function __construct(ClienteRepository $clienteRepository)
+    public function __construct(ClienteService $clienteService)
     {
-        $this->clienteRepository = $clienteRepository;
-    }
-
-    public function __invoke(Request $request)
-    {
-        switch ($request->method()) {
-            case 'POST':
-                return $this->createCliente($request);
-            case 'GET':
-                if ($request->route('id')) {
-                    return $this->getCliente($request->route('id'));
-                } else {
-                    return $this->getAllClientes();
-                }
-            case 'PATCH':
-                return $this->updateCliente($request->route('id'), $request);
-        }
+        $this->clienteService = $clienteService;
     }
 
     /**
@@ -47,17 +31,11 @@ class ClienteController extends Controller
      *         )
      *     ),
      *     @OA\Response(
-     *         response="200",
+     *         response="201",
      *         description="Cliente cadastrado com sucesso",
      *     ),
      * )
      */
-    private function createCliente(Request $request)
-    {
-        $data = $request->only(['nome', 'telefone', 'email']);
-        $cliente = $this->clienteRepository->create($data);
-        return response()->json($cliente, 201);
-    }
 
     /**
      * @OA\Get(
@@ -68,12 +46,7 @@ class ClienteController extends Controller
      *     @OA\Response(response="200", description="Dados do cliente"),
      * )
      */
-    private function getCliente($id)
-    {
-        $cliente = $this->clienteRepository->getById($id);
-        return response()->json($cliente);
-    }
-
+    
     /**
      * @OA\Get(
      *     path="/api/clientes",
@@ -82,11 +55,6 @@ class ClienteController extends Controller
      *     @OA\Response(response="200", description="Lista de clientes"),
      * )
      */
-    private function getAllClientes()
-    {
-        $clientes = $this->clienteRepository->getAll();
-        return response()->json($clientes);
-    }
 
     /**
      * @OA\Patch(
@@ -163,10 +131,21 @@ class ClienteController extends Controller
      *     )
      * )
      */
-    private function updateCliente($id, Request $request)
+    public function __invoke(Request $request)
     {
-        $data = $request->only(['nome', 'telefone', 'email']);
-        $cliente = $this->clienteRepository->update($id, $data);
-        return response()->json($cliente);
+        switch ($request->method()) {
+            case 'POST':
+                return $this->clienteService->createCliente($request);
+            case 'GET':
+                if ($request->route('id')) {
+                    return $this->clienteService->getCliente($request->route('id'));
+                } else {
+                    return $this->clienteService->getAllClientes();
+                }
+            case 'PATCH':
+                return $this->clienteService->updateCliente($request->route('id'), $request);
+            default:
+                return response()->json(['message' => 'Method not allowed'], 405);
+        }
     }
 }
