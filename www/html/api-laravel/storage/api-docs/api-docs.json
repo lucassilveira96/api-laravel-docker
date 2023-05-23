@@ -11,8 +11,8 @@
                 "tags": [
                     "Cep"
                 ],
-                "summary": "Exibe um cliente",
-                "operationId": "a3e55fc6967ddcbbfe7e96b656dba36d",
+                "summary": "Exibe um cep",
+                "operationId": "f7cb750d43c33c5aac489b2f8796b7ca",
                 "parameters": [
                     {
                         "name": "cep",
@@ -30,13 +30,37 @@
                 }
             }
         },
+        "/api/clientes/{id}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Exibe um cliente",
+                "operationId": "b7fcb8a07a78deeedfcfa6be2785cc20",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados do cliente"
+                    }
+                }
+            }
+        },
         "/api/clientes": {
             "get": {
                 "tags": [
                     "Clientes"
                 ],
                 "summary": "Lista os clientes",
-                "operationId": "d9b1d82c68c962c4bd1ca4d01de2f162",
+                "operationId": "f0611718690122608b8fbb2e85903a2e",
                 "responses": {
                     "200": {
                         "description": "Lista de clientes"
@@ -48,7 +72,7 @@
                     "Clientes"
                 ],
                 "summary": "Cadastro de clientes",
-                "operationId": "0764ff60ffec8a6bb9ce14cf02bb1319",
+                "operationId": "78e26e8d95f5becc9b7a2efa6471eda7",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -82,111 +106,6 @@
                 "responses": {
                     "201": {
                         "description": "Cliente cadastrado com sucesso"
-                    }
-                }
-            }
-        },
-        "/api/clientes/{id}": {
-            "get": {
-                "tags": [
-                    "Clientes"
-                ],
-                "summary": "Exibe um cliente",
-                "operationId": "275f0a349af0b01b0838cf5145ec2234",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Dados do cliente"
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "Clientes"
-                ],
-                "summary": "Atualizar informações do cliente",
-                "description": "Atualiza as informações de um cliente pelo ID",
-                "operationId": "updateCliente",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID do cliente",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "nome": {
-                                        "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "telefone": {
-                                        "type": "string",
-                                        "example": "1234567890"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "johndoe@example.com"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Informações do cliente atualizadas com sucesso",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "nome": {
-                                            "type": "string",
-                                            "example": "John Doe"
-                                        },
-                                        "telefone": {
-                                            "type": "string",
-                                            "example": "1234567890"
-                                        },
-                                        "email": {
-                                            "type": "string",
-                                            "format": "email",
-                                            "example": "johndoe@example.com"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Cliente não encontrado"
                     }
                 }
             }

@@ -7,7 +7,7 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - ../www/html/:/var/www/html/
+      - '../www/html/api-laravel:/var/www/html/api-laravel'
     depends_on:
       - db
     environment:

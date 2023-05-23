@@ -2,13 +2,15 @@
 
 namespace App\Repositories\Cliente;
 
+use App\Models\Cliente;
+
 interface ClienteRepositoryInterface
 {
-    public function create(array $data);
+    public function create(array $data) : ?Cliente;
 
-    public function getById(int $id);
+    public function getById(int $id) : ?Cliente;
 
-    public function update(int $id, array $data);
-    
-    public function getAll();
+    public function update(int $id, array $data) : ?Cliente;
+
+    public function getAll() : ?object;
 }
