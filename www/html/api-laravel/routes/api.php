@@ -3,7 +3,8 @@
 use App\Http\Controllers\Cep\GetCepController;
 use App\Http\Controllers\Cliente\GetClienteController;
 use App\Http\Controllers\Cliente\NewClienteController;
-use app\Http\Controllers\Cliente\UpdateClienteController;
+
+use App\Http\Controllers\Cliente\UpdateClienteController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/clientes', [NewClienteController::class, '__invoke']);

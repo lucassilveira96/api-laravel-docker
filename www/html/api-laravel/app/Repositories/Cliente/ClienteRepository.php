@@ -8,6 +8,9 @@ use http\Client;
 
 class ClienteRepository implements ClienteRepositoryInterface
 {
+    /**
+     * @var Client
+     */
     private $clienteModel;
 
     public function __construct(Cliente $cliente)

@@ -3,6 +3,11 @@
 namespace App\Services\Cep;
 interface CepServiceInterface
 {
-    public function getCepData($cep) : ?array;
+    /**
+     * get one cep into external service
+     * @param string $cep
+     * @retuen array|null
+     */
+    public function getCepData(string $cep) : ?array;
 
 }

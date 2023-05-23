@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class ClienteService implements ClienteServiceInterface
 {
+    /**
+     * @var ClienteRepository
+     */
     private $clienteRepository;
 
     public function __construct(ClienteRepository $clienteRepository)
