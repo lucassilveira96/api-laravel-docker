@@ -1,38 +1,48 @@
 <?php
 
-namespace App\Http\Controllers\Cliente;
+namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\NewClientRequest;
 use App\Http\Requests\Cliente\NewClienteRequest;
-use App\Services\Cliente\ClienteService;
+use App\Services\Client\ClientService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
-
-class UpdateClienteController extends Controller
+/**
+ * Controller responsible for updating a client by ID.
+ */
+class UpdateClientController extends Controller
 {
     /**
-     * @var ClienteService
+     * @var ClientService
      */
-    private $clienteService;
+    private $clientService;
 
-    public function __construct(ClienteService $clienteService)
+    /**
+     * Constructor.
+     *
+     * @param ClientService $clientService The client service.
+     */
+    public function __construct(ClientService $clientService)
     {
-        $this->clienteService = $clienteService;
+        $this->clientService = $clientService;
     }
 
     /**
+     * Update a client by ID.
+     *
      * @OA\Patch(
-     *     path="/api/clientes/{id}",
-     *     tags={"Clientes"},
-     *     summary="Atualizar informações do cliente",
-     *     description="Atualiza as informações de um cliente pelo ID",
-     *     operationId="updateCliente",
+     *     path="/api/clients/{id}",
+     *     tags={"Clients"},
+     *     summary="Update client by id",
+     *     description="Update client by id",
+     *     operationId="updateClient",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID do cliente",
+     *         description="ID client",
      *         required=true,
      *         @OA\Schema(
      *             type="integer",
@@ -45,14 +55,14 @@ class UpdateClienteController extends Controller
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
-     *                 property="nome",
+     *                 property="name",
      *                 type="string",
      *                 example="John Doe"
      *             ),
      *             @OA\Property(
-     *                 property="telefone",
+     *                 property="phone",
      *                 type="string",
-     *                 example="1234567890"
+     *                 example="12345678901"
      *             ),
      *             @OA\Property(
      *                 property="email",
@@ -64,7 +74,7 @@ class UpdateClienteController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Informações do cliente atualizadas com sucesso",
+     *         description="Update client by id",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
@@ -74,14 +84,14 @@ class UpdateClienteController extends Controller
      *                 example=1
      *             ),
      *             @OA\Property(
-     *                 property="nome",
+     *                 property="name",
      *                 type="string",
      *                 example="John Doe"
      *             ),
      *             @OA\Property(
-     *                 property="telefone",
+     *                 property="phone",
      *                 type="string",
-     *                 example="1234567890"
+     *                 example="12345678910"
      *             ),
      *             @OA\Property(
      *                 property="email",
@@ -93,23 +103,33 @@ class UpdateClienteController extends Controller
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Cliente não encontrado"
+     *         description="Client not found"
      *     )
      * )
      */
-    public function __invoke(NewClienteRequest $request)
+    public function __invoke(NewClientRequest $request)
     {
         try{
-            $idCliente = (int) $request->route('id');
-            if($idCliente > 0){
-                $data = $this->clienteService->updateCliente($idCliente,$request->validated());
+            $idClient = (int) $request->route('id');
+            if($idClient > 0){
+                $data = $this->clientService->updateClient($idClient,$request->validated());
 
                 if($data){
-                    return response()->json(['data'=>$data,
-                        'status'=>Response::HTTP_CREATED], Response::HTTP_CREATED);
+                    return response()->json(
+                        [
+                            'data'=>$data,
+                            'status'=>Response::HTTP_CREATED
+                        ],
+                        Response::HTTP_CREATED
+                    );
                 }else{
-                    return response()->json(['data'=>'Error',
-                        'status'=>Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+                    return response()->json(
+                        [
+                            'data'=>'Error',
+                            'status'=>Response::HTTP_BAD_REQUEST
+                        ],
+                        Response::HTTP_BAD_REQUEST
+                    );
                 }
             }
 
@@ -117,8 +137,13 @@ class UpdateClienteController extends Controller
             $exception = $e->getMessage();
             Log::error($exception);
 
-            return response()->json(['data'=>'Error',
-                'status'=>Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+            return response()->json(
+                [
+                    'data'=>'Error',
+                    'status'=>Response::HTTP_BAD_REQUEST
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         }
     }
 }

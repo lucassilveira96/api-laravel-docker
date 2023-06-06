@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Log;
 use OpenApi\Annotations as OA;
 
 /**
+ * Controller responsible for retrieving information about a CEP.
+ *
  * @OA\Info(
  *     title="Teste Laravel",
  *     version="1.0.0",
@@ -19,23 +21,25 @@ use OpenApi\Annotations as OA;
  */
 class GetCepController extends Controller
 {
-
     /**
-     * @const ROUTE_CEP
-     */
-    const ROUTE_CEP = 'cep';
-
-    /**
-     * @var $cepService
+     * @var CepService
      */
     private $cepService;
 
+
+    /**
+     * Constructor.
+     *
+     * @param CepService $cepService The CEP service.
+     */
     public function __construct(CepService $cepService)
     {
         $this->cepService = $cepService;
     }
 
     /**
+     * Get information about a CEP.
+     *
      * @OA\Get(
      *     path="/api/cep/{cep}",
      *     tags={"Cep"},
@@ -47,17 +51,27 @@ class GetCepController extends Controller
     public function __invoke(Request $request)
     {
        try{
-           $cep = $request->route(self::ROUTE_CEP);
+           $cep = $request->route('cep');
            $data = $this->cepService->getCepData($cep);
 
-           return response()->json(['data'=>$data,
-               'status'=>Response::HTTP_OK], Response::HTTP_OK);
+           return response()->json(
+               [
+                   'data'=>$data,
+                   'status'=>Response::HTTP_OK
+               ],
+                    Response::HTTP_OK
+                );
        }catch(Exception $e){
            $exception = $e->getMessage();
            Log::error($exception);
 
-           return response()->json(['data'=>'Error',
-               'status'=>Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+           return response()->json(
+                [
+                    'data'=>'Error',
+                    'status'=>Response::HTTP_BAD_REQUEST
+                ],
+                    Response::HTTP_BAD_REQUEST
+                );
        }
     }
 }

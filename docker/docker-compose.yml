@@ -17,6 +17,8 @@ services:
       - DB_DATABASE=laravel
       - DB_USERNAME=root
       - DB_PASSWORD=secret
+    networks:
+      - php-laravel
 
   db:
     image: mysql:5.7
@@ -25,3 +27,8 @@ services:
     environment:
       - MYSQL_DATABASE=laravel
       - MYSQL_ROOT_PASSWORD=secret
+    networks:
+      - php-laravel
+
+networks:
+  php-laravel:

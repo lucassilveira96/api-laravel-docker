@@ -10,10 +10,14 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/html
 
 CMD cd /var/www/html/api-laravel \
-    && composer install --prefer-dist \
-    && php artisan cache:clear \
-    && php artisan config:cache \
-    && php artisan l5-swagger:generate \
-    && php artisan migrate \
-    && php artisan route:clear \
-    && php artisan serve --host=0.0.0.0 --port=8000
+   && composer install --prefer-dist \
+   && php artisan key:generate \
+   && php artisan cache:clear \
+   && php artisan config:cache \
+   && php artisan l5-swagger:generate \
+   && php artisan config:clear \
+   && php artisan migrate:fresh \
+   && php artisan route:clear \
+   && php artisan test \
+   && php artisan serve --host=0.0.0.0 --port=8000
+

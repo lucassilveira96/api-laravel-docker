@@ -1,15 +1,29 @@
 <?php
 
 use App\Http\Controllers\Cep\GetCepController;
-use App\Http\Controllers\Cliente\GetClienteController;
-use App\Http\Controllers\Cliente\NewClienteController;
-
-use App\Http\Controllers\Cliente\UpdateClienteController;
+use App\Http\Controllers\Client\GetAllClientsController;
+use App\Http\Controllers\Client\GetOneClientController;
+use App\Http\Controllers\Client\NewClientController;
+use App\Http\Controllers\Client\UpdateClientController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/clientes', [NewClienteController::class, '__invoke']);
-Route::get('/clientes', [GetClienteController::class, '__invoke']);
-Route::get('/clientes/{id}', [GetClienteController::class, '__invoke']);
-Route::patch('/clientes/{id}', [UpdateClienteController::class, '__invoke']);
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+*/
 
-Route::get('/cep/{cep}', [GetCepController::class, '__invoke']);
+Route::post('/clients', NewClientController::class);
+
+Route::get('/clients', GetAllClientsController::class );
+
+Route::get('/clients/{id}', GetOneClientController::class);
+
+Route::patch('/clients/{id}', UpdateClientController::class);
+
+Route::get('/cep/{cep}', GetCepController::class);
