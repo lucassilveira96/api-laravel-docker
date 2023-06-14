@@ -48,19 +48,17 @@ class GetCepController extends Controller
      *     @OA\Response(response="200", description="Dados do Cep"),
      * )
      */
-    public function __invoke(Request $request)
+    public function __invoke(int $cep)
     {
        try{
-           $cep = $request->route('cep');
            $data = $this->cepService->getCepData($cep);
 
            return response()->json(
                [
                    'data'=>$data,
                    'status'=>Response::HTTP_OK
-               ],
-                    Response::HTTP_OK
-                );
+               ]
+           );
        }catch(Exception $e){
            $exception = $e->getMessage();
            Log::error($exception);
@@ -69,9 +67,8 @@ class GetCepController extends Controller
                 [
                     'data'=>'Error',
                     'status'=>Response::HTTP_BAD_REQUEST
-                ],
-                    Response::HTTP_BAD_REQUEST
-                );
+                ]
+           );
        }
     }
 }

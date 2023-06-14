@@ -127,8 +127,7 @@ class UpdateClientController extends Controller
                         [
                             'data'=>'Error',
                             'status'=>Response::HTTP_BAD_REQUEST
-                        ],
-                        Response::HTTP_BAD_REQUEST
+                        ]
                     );
                 }
             }
@@ -141,8 +140,7 @@ class UpdateClientController extends Controller
                 [
                     'data'=>'Error',
                     'status'=>Response::HTTP_BAD_REQUEST
-                ],
-                Response::HTTP_BAD_REQUEST
+                ]
             );
         }
     }

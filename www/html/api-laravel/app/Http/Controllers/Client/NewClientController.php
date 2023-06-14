@@ -61,8 +61,7 @@ class NewClientController extends Controller
                 [
                     'data'=>$data,
                     'status'=>Response::HTTP_CREATED
-                ],
-                Response::HTTP_CREATED
+                ]
             );
 
         } catch(Exception $e){
@@ -73,8 +72,7 @@ class NewClientController extends Controller
                 [
                     'data'=>'Error',
                     'status'=>Response::HTTP_BAD_REQUEST
-                ],
-                Response::HTTP_BAD_REQUEST
+                ]
             );
         }
     }

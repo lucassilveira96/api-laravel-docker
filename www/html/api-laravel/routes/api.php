@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/clients', NewClientController::class);
+Route::post('/clients', NewClientController::class)->name('newClient');
 
-Route::get('/clients', GetAllClientsController::class );
+Route::get('/clients', GetAllClientsController::class )->name('getAllClients');;
 
-Route::get('/clients/{id}', GetOneClientController::class);
+Route::get('/clients/{id}', GetOneClientController::class)->name('getOneClient');;
 
-Route::patch('/clients/{id}', UpdateClientController::class);
+Route::patch('/clients/{id}', UpdateClientController::class)->name('updateClient');;
 
-Route::get('/cep/{cep}', GetCepController::class);
+Route::get('/cep/{cep}', GetCepController::class)->name('getCep');;

@@ -49,8 +49,7 @@ class GetOneClientController extends Controller
                 [
                     'data'=>$data,
                     'status'=>Response::HTTP_OK
-                ],
-                Response::HTTP_OK
+                ]
             );
         }catch(Exception $e){
             $exception = $e->getMessage();
@@ -60,8 +59,7 @@ class GetOneClientController extends Controller
                 [
                     'data'=>'Error',
                     'status'=>Response::HTTP_BAD_REQUEST
-                ],
-                Response::HTTP_BAD_REQUEST
+                ]
             );
         }
     }
