@@ -30,5 +30,13 @@ services:
     networks:
       - php-laravel
 
+  db-test:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=laravel_test
+      - MYSQL_ROOT_PASSWORD=secret
+    networks:
+      - php-laravel
+
 networks:
   php-laravel:
