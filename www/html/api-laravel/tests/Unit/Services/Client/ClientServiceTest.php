@@ -5,6 +5,7 @@ namespace Tests\Unit\Services\Client;
 use App\Models\Client;
 use App\Repositories\Client\ClientRepository;
 use App\Services\Client\ClientService;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -41,22 +42,24 @@ class ClientServiceTest extends TestCase
             'email' => $this->faker->email,
         ];
 
+        // Create a new instance of the Client factory
+        $clientFactory = Factory::factoryForModel(Client::class);
+
+        // Create a new Client using the factory
+        $client = $clientFactory->create($data);
+
         // Call the method being tested
-        $client = $this->clientService->createClient($data);
+        $result = $this->clientService->createClient($data);
 
         // Assert the result
-        $this->assertInstanceOf(Client::class, $client);
+        $this->assertInstanceOf(Client::class, $result);
         $this->assertDatabaseHas('clients', $data);
     }
 
     public function testGetClient()
     {
         // Create a test client
-        $client = Client::create([
-            'name' => $this->faker->name,
-            'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->email,
-        ]);
+        $client = Client::factory()->create();
 
         // Call the method being tested
         $result = $this->clientService->getClient($client->id);
@@ -68,21 +71,21 @@ class ClientServiceTest extends TestCase
 
     public function testGetAllClients()
     {
+        // Create test clients
+        $clients = Client::factory()->count(5)->create();
+
         // Call the method being tested
         $result = $this->clientService->getAllClients();
 
         // Assert the result
-        $this->assertIsObject($result);
+        $this->assertInstanceOf(Client::class, $result->first());
+        $this->assertCount(5, $result);
     }
 
     public function testUpdateClient()
     {
         // Create a test client
-        $client = Client::create([
-            'name' => $this->faker->name,
-            'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->email,
-        ]);
+        $client = Client::factory()->create();
 
         // Update the client data
         $data = [
