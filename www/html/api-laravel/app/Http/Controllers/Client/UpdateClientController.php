@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\NewClientRequest;
-use App\Http\Requests\Cliente\NewClienteRequest;
 use App\Services\Client\ClientService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
@@ -23,7 +21,7 @@ class UpdateClientController extends Controller
     /**
      * Constructor.
      *
-     * @param ClientService $clientService The client service.
+     * @param  ClientService  $clientService The client service.
      */
     public function __construct(ClientService $clientService)
     {
@@ -39,21 +37,26 @@ class UpdateClientController extends Controller
      *     summary="Update client by id",
      *     description="Update client by id",
      *     operationId="updateClient",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         description="ID client",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="integer",
      *             format="int64",
      *             example=1
      *         )
      *     ),
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="name",
      *                 type="string",
@@ -72,11 +75,14 @@ class UpdateClientController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Update client by id",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="id",
      *                 type="integer",
@@ -101,6 +107,7 @@ class UpdateClientController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Client not found"
@@ -109,38 +116,47 @@ class UpdateClientController extends Controller
      */
     public function __invoke(NewClientRequest $request)
     {
-        try{
+        try {
             $idClient = (int) $request->route('id');
-            if($idClient > 0){
-                $data = $this->clientService->updateClient($idClient,$request->validated());
+            if ($idClient > 0) {
+                $data = $this->clientService->updateClient($idClient, $request->validated());
 
-                if($data){
+                if ($data) {
                     return response()->json(
                         [
-                            'data'=>$data,
-                            'status'=>Response::HTTP_CREATED
+                            'data' => $data,
+                            'status' => Response::HTTP_OK,
                         ],
-                        Response::HTTP_CREATED
+                        Response::HTTP_OK
                     );
-                }else{
+                } else {
                     return response()->json(
                         [
-                            'data'=>'Error',
-                            'status'=>Response::HTTP_BAD_REQUEST
-                        ]
+                            'data' => 'Error',
+                            'status' => Response::HTTP_BAD_REQUEST,
+                        ],
+                        Response::HTTP_BAD_REQUEST
                     );
                 }
             }
 
-        } catch(Exception $e){
+        } catch (Exception $e) {
             $exception = $e->getMessage();
-            Log::error($exception);
+            Log::error(
+                $e->getMessage,
+                [
+                    'code' => 'client_api_log',
+                    'exception' => $exception,
+                    'context' => $request,
+                ]
+            );
 
             return response()->json(
                 [
-                    'data'=>'Error',
-                    'status'=>Response::HTTP_BAD_REQUEST
-                ]
+                    'data' => 'Error',
+                    'status' => Response::HTTP_BAD_REQUEST,
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         }
     }

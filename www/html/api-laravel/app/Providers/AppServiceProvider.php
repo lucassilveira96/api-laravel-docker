@@ -17,16 +17,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-         $this->app->bind(CepService::class, function ($app){
-             return new CepService();
-         });
+        $this->app->bind(CepService::class, function ($app) {
+            return new CepService();
+        });
 
-        $this->app->bind(Client::class, function ($app){
+        $this->app->bind(Client::class, function ($app) {
             return new Client();
         });
 
-        $this->app->bind(ClientService::class, function ($app){
-          return new ClientService(new ClientRepository(new Client()));
+        $this->app->bind(ClientService::class, function ($app) {
+            return new ClientService(new ClientRepository(new Client()));
         });
     }
 

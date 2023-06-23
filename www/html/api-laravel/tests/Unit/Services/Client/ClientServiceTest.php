@@ -5,7 +5,6 @@ namespace Tests\Unit\Services\Client;
 use App\Models\Client;
 use App\Repositories\Client\ClientRepository;
 use App\Services\Client\ClientService;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -43,10 +42,10 @@ class ClientServiceTest extends TestCase
         ];
 
         // Create a new instance of the Client factory
-        $clientFactory = Factory::factoryForModel(Client::class);
+        $clientFactory = Client::factory();
 
         // Create a new Client using the factory
-        $client = $clientFactory->create($data);
+        $client = $clientFactory->make($data);
 
         // Call the method being tested
         $result = $this->clientService->createClient($data);

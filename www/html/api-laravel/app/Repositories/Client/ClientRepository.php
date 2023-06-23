@@ -3,7 +3,6 @@
 namespace App\Repositories\Client;
 
 use App\Models\Client;
-use App\Repositories\Client\ClientRepositoryInterface;
 
 class ClientRepository implements ClientRepositoryInterface
 {
@@ -20,7 +19,7 @@ class ClientRepository implements ClientRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(array $data) : ?Client
+    public function create(array $data): ?Client
     {
         return $this->clientModel->create($data);
     }
@@ -28,7 +27,7 @@ class ClientRepository implements ClientRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getById(int $id) : ?Client
+    public function getById(int $id): ?Client
     {
         return $this->clientModel->find($id);
     }
@@ -36,17 +35,18 @@ class ClientRepository implements ClientRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function update(int $id, array $data) : ?Client
+    public function update(int $id, array $data): ?Client
     {
         $client = $this->getById($id);
         $client->update($data);
+
         return $client;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAll() : ?object
+    public function getAll(): ?object
     {
         return $this->clientModel->all();
     }

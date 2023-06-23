@@ -22,7 +22,7 @@ class GetOneClientController extends Controller
     /**
      * Constructor.
      *
-     * @param ClientService $clientService The client service.
+     * @param  ClientService  $clientService The client service.
      */
     public function __construct(ClientService $clientService)
     {
@@ -36,30 +36,41 @@ class GetOneClientController extends Controller
      *     path="/api/clients/{id}",
      *     tags={"Clients"},
      *     summary="Get one client by id",
+     *
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *
      *     @OA\Response(response="200", description="Get one client by id"),
      * )
      */
     public function __invoke(Request $request)
     {
-        try{
+        try {
             $data = $this->clientService->getClient($request->route('id'));
 
             return response()->json(
                 [
-                    'data'=>$data,
-                    'status'=>Response::HTTP_OK
+                    'data' => $data,
+                    'status' => Response::HTTP_OK,
+                ],
+                Response::HTTP_OK
+            );
+        } catch (Exception $e) {
+            $exception = $e->getMessage();
+            Log::error(
+                $e->getMessage,
+                [
+                    'code' => 'client_api_log',
+                    'exception' => $exception,
+                    'context' => $request,
                 ]
             );
-        }catch(Exception $e){
-            $exception = $e->getMessage();
-            Log::error($exception);
 
             return response()->json(
                 [
-                    'data'=>'Error',
-                    'status'=>Response::HTTP_BAD_REQUEST
-                ]
+                    'data' => 'Error',
+                    'status' => Response::HTTP_BAD_REQUEST,
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         }
     }

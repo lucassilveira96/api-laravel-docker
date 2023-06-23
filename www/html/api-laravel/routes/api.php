@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/clients', NewClientController::class)->name('newClient');
 
-Route::get('/clients', GetAllClientsController::class )->name('getAllClients');;
+Route::get('/clients', GetAllClientsController::class)->name('getAllClients');
 
-Route::get('/clients/{id}', GetOneClientController::class)->name('getOneClient');;
+Route::get('/clients/{id}', GetOneClientController::class)->name('getOneClient');
 
-Route::patch('/clients/{id}', UpdateClientController::class)->name('updateClient');;
+Route::patch('/clients/{id}', UpdateClientController::class)->name('updateClient');
 
-Route::get('/cep/{cep}', GetCepController::class)->name('getCep');;
+Route::get('/cep/{cep}', GetCepController::class)->name('getCep');

@@ -16,6 +16,6 @@ class VerifyCsrfToken extends Middleware
         'getAllClients',
         'getOneClient',
         'updateClient',
-        'getCep'
+        'getCep',
     ];
 }

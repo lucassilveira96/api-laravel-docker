@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Cep;
 use App\Http\Controllers\Controller;
 use App\Services\Cep\CepService;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use OpenApi\Annotations as OA;
@@ -26,11 +25,10 @@ class GetCepController extends Controller
      */
     private $cepService;
 
-
     /**
      * Constructor.
      *
-     * @param CepService $cepService The CEP service.
+     * @param  CepService  $cepService The CEP service.
      */
     public function __construct(CepService $cepService)
     {
@@ -44,31 +42,42 @@ class GetCepController extends Controller
      *     path="/api/cep/{cep}",
      *     tags={"Cep"},
      *     summary="Exibe um cep",
+     *
      *     @OA\Parameter(name="cep", in="path", required=true, @OA\Schema(type="string")),
+     *
      *     @OA\Response(response="200", description="Dados do Cep"),
      * )
      */
     public function __invoke(int $cep)
     {
-       try{
-           $data = $this->cepService->getCepData($cep);
+        try {
+            $data = $this->cepService->getCepData($cep);
 
-           return response()->json(
-               [
-                   'data'=>$data,
-                   'status'=>Response::HTTP_OK
-               ]
-           );
-       }catch(Exception $e){
-           $exception = $e->getMessage();
-           Log::error($exception);
-
-           return response()->json(
+            return response()->json(
                 [
-                    'data'=>'Error',
-                    'status'=>Response::HTTP_BAD_REQUEST
+                    'data' => $data,
+                    'status' => Response::HTTP_OK,
+                ],
+                Response::HTTP_OK
+            );
+        } catch (Exception $e) {
+            $exception = $e->getMessage();
+            Log::error(
+                $e->getMessage,
+                [
+                    'code' => 'cep_api_log',
+                    'exception' => $exception,
+                    'context' => $cep,
                 ]
-           );
-       }
+            );
+
+            return response()->json(
+                [
+                    'data' => 'Error',
+                    'status' => Response::HTTP_BAD_REQUEST,
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
 }

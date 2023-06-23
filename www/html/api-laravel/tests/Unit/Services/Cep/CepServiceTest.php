@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response as ResponseAlias;
 use Tests\TestCase;
 
 class CepServiceTest extends TestCase
@@ -22,16 +22,16 @@ class CepServiceTest extends TestCase
     public function testGetCepData()
     {
         $url = env('URL_BUSCA_CEP');
-        $cep = "95580000";
+        $cep = '95580000';
 
         // Simulate the response from the CEP search API
         $responseBody = [
             'cep' => '95580000',
             'state' => 'RS',
             'city' => 'Três Cachoeiras',
-            'service' => 'correios'
+            'service' => 'correios',
         ];
-        $response = new Response(200, [], json_encode($responseBody));
+        $response = new Response(ResponseAlias::HTTP_OK, [], json_encode($responseBody));
 
         // Create a mock handler and push the response to it
         $mockHandler = new MockHandler([$response]);

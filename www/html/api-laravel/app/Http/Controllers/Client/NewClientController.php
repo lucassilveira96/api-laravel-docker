@@ -22,7 +22,7 @@ class NewClientController extends Controller
     /**
      * Constructor.
      *
-     * @param ClientService $clientService The client service.
+     * @param  ClientService  $clientService The client service.
      */
     public function __construct(ClientService $clientService)
     {
@@ -36,16 +36,20 @@ class NewClientController extends Controller
      *     path="/api/clients",
      *     tags={"Clients"},
      *     summary="Create client",
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             type="object",
      *             required={"name", "phone", "email"},
+     *
      *             @OA\Property(property="name", type="string", example="John Doe"),
      *             @OA\Property(property="phone", type="string", example="12345678910"),
      *             @OA\Property(property="email", type="string", format="email", example="johndoe@example.com")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response="201",
      *         description="Cliente cadastrado com sucesso",
@@ -54,25 +58,34 @@ class NewClientController extends Controller
      */
     public function __invoke(NewClientRequest $request)
     {
-        try{
+        try {
             $data = $this->clientService->createClient($request->validated());
 
             return response()->json(
                 [
-                    'data'=>$data,
-                    'status'=>Response::HTTP_CREATED
+                    'data' => $data,
+                    'status' => Response::HTTP_CREATED,
+                ],
+                Response::HTTP_CREATED
+            );
+
+        } catch (Exception $e) {
+            $exception = $e->getMessage();
+            Log::error(
+                $e->getMessage,
+                [
+                    'code' => 'client_api_log',
+                    'exception' => $exception,
+                    'context' => $request,
                 ]
             );
 
-        } catch(Exception $e){
-            $exception = $e->getMessage();
-            Log::error($exception);
-
             return response()->json(
                 [
-                    'data'=>'Error',
-                    'status'=>Response::HTTP_BAD_REQUEST
-                ]
+                    'data' => 'Error',
+                    'status' => Response::HTTP_BAD_REQUEST,
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         }
     }
