@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Cliente;
-
-
+namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewClienteRequest extends FormRequest
+/**
+ * Request class for validating the data when creating a new client.
+ */
+class NewClientRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,8 +27,8 @@ class NewClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required|string|max:255',
-            'telefone' => 'required|string|min:11',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|min:11',
             'email' => 'required|string|max:255',
         ];
     }

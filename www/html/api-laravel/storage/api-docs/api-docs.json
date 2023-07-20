@@ -12,6 +12,7 @@
                     "Cep"
                 ],
                 "summary": "Exibe um cep",
+                "description": "Get information about a CEP.",
                 "operationId": "f7cb750d43c33c5aac489b2f8796b7ca",
                 "parameters": [
                     {
@@ -30,67 +31,45 @@
                 }
             }
         },
-        "/api/clientes/{id}": {
+        "/api/clients": {
             "get": {
                 "tags": [
-                    "Clientes"
+                    "Clients"
                 ],
-                "summary": "Exibe um cliente",
-                "operationId": "b7fcb8a07a78deeedfcfa6be2785cc20",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
+                "summary": "Get all clients",
+                "description": "Retrieves all clients.",
+                "operationId": "b65764bbc334d2569f9d0eda5b0abd35",
                 "responses": {
                     "200": {
-                        "description": "Dados do cliente"
-                    }
-                }
-            }
-        },
-        "/api/clientes": {
-            "get": {
-                "tags": [
-                    "Clientes"
-                ],
-                "summary": "Lista os clientes",
-                "operationId": "f0611718690122608b8fbb2e85903a2e",
-                "responses": {
-                    "200": {
-                        "description": "Lista de clientes"
+                        "description": "Get all clients"
                     }
                 }
             },
             "post": {
                 "tags": [
-                    "Clientes"
+                    "Clients"
                 ],
-                "summary": "Cadastro de clientes",
-                "operationId": "78e26e8d95f5becc9b7a2efa6471eda7",
+                "summary": "Create client",
+                "description": "Create a new client.",
+                "operationId": "8f3c11b9bd9bbd2a6caf316219764e5f",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "nome",
-                                    "telefone",
+                                    "name",
+                                    "phone",
                                     "email"
                                 ],
                                 "properties": {
-                                    "nome": {
+                                    "name": {
                                         "type": "string",
                                         "example": "John Doe"
                                     },
-                                    "telefone": {
+                                    "phone": {
                                         "type": "string",
-                                        "example": "1234567890"
+                                        "example": "12345678910"
                                     },
                                     "email": {
                                         "type": "string",
@@ -106,6 +85,112 @@
                 "responses": {
                     "201": {
                         "description": "Cliente cadastrado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/clients/{id}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get one client by id",
+                "description": "Retrieves one client by ID.",
+                "operationId": "4025f7eb3e543e8bc743d6321fb117eb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get one client by id"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Update client by id",
+                "description": "Update client by id",
+                "operationId": "updateClient",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID client",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "12345678901"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update client by id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int64",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "phone": {
+                                            "type": "string",
+                                            "example": "12345678910"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "johndoe@example.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found"
                     }
                 }
             }

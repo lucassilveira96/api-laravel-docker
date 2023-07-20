@@ -1,57 +1,48 @@
 <?php
 
-namespace App\Http\Controllers\Cep;
+namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Services\Cep\CepService;
-use Exception;
+use App\Services\Client\ClientService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use OpenApi\Annotations as OA;
 
 /**
- * Controller responsible for retrieving information about a CEP.
- *
- * @OA\Info(
- *     title="Teste Laravel",
- *     version="1.0.0",
- *     description="Api teste Laravel"
- * )
+ * Controller responsible for retrieving all clients.
  */
-class GetCepController extends Controller
+class GetAllClientsController extends Controller
 {
     /**
-     * @var CepService
+     * @var ClientService
      */
-    private $cepService;
+    private $clientService;
 
     /**
      * Constructor.
      *
-     * @param  CepService  $cepService The CEP service.
+     * @param  ClientService  $clientService The client service.
      */
-    public function __construct(CepService $cepService)
+    public function __construct(ClientService $clientService)
     {
-        $this->cepService = $cepService;
+        $this->clientService = $clientService;
     }
 
     /**
-     * Get information about a CEP.
+     * Retrieves all clients.
      *
      * @OA\Get(
-     *     path="/api/cep/{cep}",
-     *     tags={"Cep"},
-     *     summary="Exibe um cep",
+     *     path="/api/clients",
+     *     tags={"Clients"},
+     *     summary="Get all clients",
      *
-     *     @OA\Parameter(name="cep", in="path", required=true, @OA\Schema(type="string")),
-     *
-     *     @OA\Response(response="200", description="Dados do Cep"),
+     *     @OA\Response(response="200", description="Get all clients"),
      * )
      */
-    public function __invoke(int $cep)
+    public function __invoke()
     {
         try {
-            $data = $this->cepService->getCepData($cep);
+            $data = $this->clientService->getAllClients();
 
             return response()->json(
                 [
@@ -65,9 +56,8 @@ class GetCepController extends Controller
             Log::error(
                 $e->getMessage,
                 [
-                    'code' => 'cep_api_log',
+                    'code' => 'client_api_log',
                     'exception' => $exception,
-                    'context' => $cep,
                 ]
             );
 
